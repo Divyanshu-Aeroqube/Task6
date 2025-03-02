@@ -1,17 +1,18 @@
 import api from '@/api/api';
 import { useEffect, useState } from 'react'
 import CharacterTabs from './ui/CharacterTabs';
+import { useLoading } from '@/context/LoadingProvider';
 
 const Characters = () => {
+  const { startLoading, stopLoading } = useLoading();
         const [characters,setCharacters]=useState([]);
-        const [loading,setLoading]=useState(true);
         const [err,setErr]=useState("");
 
 
 
         useEffect(() => {
             const getCharacters=async()=>{
-                setLoading(true);
+              startLoading();
                 setErr("");
                 try {
                     const bookResponse=await api.get('/characters');
@@ -23,14 +24,13 @@ const Characters = () => {
                         console.log("Unknown error", error);
                       }
                 }finally{
-                    setLoading(false);
+                  stopLoading();
                 }
             }
         
             getCharacters();
         }, [])
         
-        if(loading) return <p>Loading.....</p>
         if(err) return <h1>Something Went Wrong</h1>
         console.log(characters) 
   return (
@@ -40,7 +40,7 @@ const Characters = () => {
 <p className=' tracking-wide text-lg text-muted-foreground max-w-[700px] font-[18px] '>Meet the witches, wizards, and magical creatures from the wizarding world.</p>
 </article>
 <article className='w-full'>
-  <CharacterTabs/>
+  <CharacterTabs characters={characters}/>
 </article>
 </section>
   )

@@ -1,8 +1,18 @@
 import { Button } from "@/components/ui/button"
 import { BookOpen, Castle, User, WandSparkles } from "lucide-react"
 import HomeCard from "./ui/HomeCard"
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/books");
+  };
+  const handleCharNavigate=()=>{
+    navigate("/characters")
+  }
+
   return (
 <div className="w-[90%] mx-auto mb-8">
 <div className="py-10 ">
@@ -10,20 +20,22 @@ const Home = () => {
       <div className="rounded-full p-6 shadow-[0_0_20px_hsl(263.4,70%,50.4%)] text-4xl">⚡</div>
       <h1 className=" mx-auto text-center text-4xl font-extrabold tracking-tight lg:text-5xl mb-2">Potter API Explorer</h1>
 
-      <p className="text-xl w-[55%] mb-6 text-center text-muted-foreground mx-auto">Discover the magical world of Harry Potter through our interactive API explorer. Browse books, characters, spells, and houses from the wizarding world.</p>
+      <p className="text-xl w-[80%] lg:w-[55%] mb-6 text-center text-muted-foreground mx-auto">Discover the magical world of Harry Potter through our interactive API explorer. Browse books, characters, spells, and houses from the wizarding world.</p>
 
 
-<article className="gap-x-4 flex">      <Button size={"lg"}><BookOpen size={20} className="inline" /> Explore Books</Button>
-<Button size={"lg"} variant={"outline"}><User size={20} className="inline" /> Meet Characters</Button></article>
+<article className="gap-x-2 md:gap-x-4 flex">      
+  <Button className="w-fit md:w-[200px] cursor-pointer " onClick={handleNavigate}><BookOpen size={20} className="inline" /> Explore Books</Button>
+<Button className="w-fit md:w-[200px] cursor-pointer" onClick={handleCharNavigate} variant={"outline"}><User size={20} className="inline" /> Meet Characters</Button></article>
     </div>
 </div>
 
-<div className="grid grid-cols-4 mx-auto gap-x-4">
+<div className="grid gap-y-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-auto gap-x-4">
 <HomeCard   title="Books"
   description="Explore the Harry Potter book series"
   content="Discover details about all seven books in the Harry Potter series, including summaries and publication dates."
   footer="View Books"
   icon={<BookOpen size={20} className="inline" />}
+  route="/books"
    />
 
 <HomeCard   title="Characters"
@@ -31,6 +43,7 @@ const Home = () => {
   content="Browse through the characters from the Harry Potter universe, including their backgrounds and affiliations."
   footer="View Characters" 
   icon={<User size={20} className="inline" />}
+  route="/characters"
   />
 
 <HomeCard   title="Spells"
@@ -38,6 +51,7 @@ const Home = () => {
   content="Discover the various spells used in the wizarding world, their effects, and how they're cast."
   footer="View Spells" 
   icon={<WandSparkles size={20} className="inline" mb-8/>}
+  route="/spells"
   />
 
 <HomeCard   title="Houses"
@@ -45,6 +59,7 @@ const Home = () => {
   content="Learn about the four houses of Hogwarts School of Witchcraft and Wizardry and their unique traits."
   footer="View Houses" 
   icon={<Castle size={20} className="inline" />}
+  route="/houses"
   
   />
 

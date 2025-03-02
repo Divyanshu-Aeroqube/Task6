@@ -1,24 +1,48 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import SpellCard from "./SpellCard"
-const SpellTab = () => {
+import { useState } from "react"
+type SpellsType = {
+  "spell": string,
+  "use": string,
+  "index": number
+}
+const SpellTab: React.FC<{ spells: SpellsType[] }> = ({ spells }) => {
+
+  const [selectedTab, setSelectedTab] = useState("All");
   return (
-<Tabs defaultValue="All" className="">
-  <TabsList className="w-full h-[40px] mb-4 py-1.5 ">
-  <div className="flex flex-wrap  w-full ">
-    <TabsTrigger className="w-1/3   mx-auto px-3" value="All">All Spells</TabsTrigger>
-    <TabsTrigger className="w-1/3  mx-auto px-3" value="Charms">Charms</TabsTrigger>
-    <TabsTrigger className="w-1/3  mx-auto px-3" value="curses">Curses</TabsTrigger>
-</div>
+    <Tabs defaultValue="All" onValueChange={setSelectedTab} className="">
+      <TabsList className="w-full h-[40px] mb-4 py-1.5 ">
+        <div className="flex flex-wrap  w-full ">
+          <TabsTrigger className="w-1/3 cursor-pointer  mx-auto px-3" value="All">All Spells</TabsTrigger>
+          <TabsTrigger className="w-1/3 cursor-pointer  mx-auto px-3" value="Charms">Charms</TabsTrigger>
+          <TabsTrigger className="w-1/3 cursor-pointer  mx-auto px-3" value="Curses">Curses</TabsTrigger>
+        </div>
 
 
-  </TabsList>
-  <TabsContent value="All"><div className="grid grid-cols-3 gap-3"><SpellCard/><SpellCard/><SpellCard/></div> </TabsContent>
-  <TabsContent value="Charms"></TabsContent>
-  <TabsContent value="curses"></TabsContent>
+      </TabsList>
+      <TabsContent value="All"><div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3">
+        {spells.map((spell) => (
+          <SpellCard spell={spell} />
+        ))}
+      </div> 
+      </TabsContent>
+      <TabsContent value="Charms"><div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3">
+        {spells.filter(f => f.index % 2 != 0).map((spell) => (
+          <SpellCard spell={spell} />
+        ))}
+      </div> 
+      </TabsContent>
+      <TabsContent value="Curses"><div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3">
+        {spells.filter(f => f.index % 2 == 0).map((spell) => (
+          <SpellCard spell={spell} />
+        ))}
+
+      </div> </TabsContent>
 
 
-</Tabs>
+
+    </Tabs>
   )
 }
 

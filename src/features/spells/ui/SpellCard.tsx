@@ -1,17 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { WandSparkles } from "lucide-react"
+type SpellsType = {
+    "spell": string,
+    "use": string,
+    "index": number
+}
+const SpellCard: React.FC<{ spell: SpellsType }> = ({ spell }) => (
 
-const SpellCard = () => (
     <Card className="rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden py-0 pb-6">
         <div className="h-2 bg-gradient-to-r from-purple-600 to-blue-600"></div>
         <CardHeader className="space-y-1.5 ">
             <div className="flex items-center justify-between">
-                <CardTitle className="tracking-tight text-lg" >Expelliarmus</CardTitle>
-                <WandSparkles size={24} className="text-muted-foreground"/>
+                <CardTitle className="tracking-tight text-lg" >{spell.spell}</CardTitle>
+                <WandSparkles size={24} className="text-muted-foreground" />
             </div>
             <CardDescription className="flex items-center gap-2" >
 
-                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80">Charm</div>
+                <div className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent  text-primary-foreground  ${spell.index % 2 != 0 ? "bg-primary hover:bg-primary/80":"bg-destructive hover:bg-destructive/80"}`}> {spell.index % 2 != 0 ? "Charm" : "Curse"} </div>
                 <span>•</span>
                 <span>Easy</span>
             </CardDescription>

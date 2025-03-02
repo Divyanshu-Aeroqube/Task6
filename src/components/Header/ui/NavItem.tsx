@@ -7,7 +7,9 @@ import {
 import { BookOpen, Castle, House, User, WandSparkles } from "lucide-react";
 const NavItem = () => {
   return (
-    <NavigationMenu className="hidden md:block" >
+    <>
+    <span className="block lg:hidden cursor-pointer">☰</span>
+    <NavigationMenu className="hidden lg:block" >
     <NavigationMenuList className="flex ">
 
     <NavLink
@@ -81,6 +83,7 @@ const NavItem = () => {
 
     </NavigationMenuList>
   </NavigationMenu>
+  </>
   )
 }
 

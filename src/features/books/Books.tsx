@@ -1,16 +1,16 @@
 import {useEffect, useState} from 'react'
 import api from "@/api/api";
 import BookCard from './ui/BookCard';
+import { useLoading } from '@/context/LoadingProvider';
 const Books = () => {
-
+    const { startLoading, stopLoading } = useLoading();
     const [books,setBooks]=useState([]);
-    const [loading,setLoading]=useState(true);
     const [err,setErr]=useState("");
 
 
 useEffect(() => {
     const getBooks=async()=>{
-        setLoading(true);
+        startLoading();
         setErr("");
         try {
             const bookResponse=await api.get('/books');
@@ -22,7 +22,7 @@ useEffect(() => {
                 console.log("Unknown error", error);
               }
         }finally{
-            setLoading(false);
+            stopLoading();
         }
     }
 

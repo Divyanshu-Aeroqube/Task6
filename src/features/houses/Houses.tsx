@@ -1,15 +1,16 @@
 import api from '@/api/api';
 import { useEffect, useState } from 'react'
 import HouseCard from './ui/HouseCard';
+import { useLoading } from '@/context/LoadingProvider';
 
 const Houses = () => {
+    const { startLoading, stopLoading } = useLoading();
             const [houses,setHouses]=useState([]);
-            const [loading,setLoading]=useState(true);
             const [err,setErr]=useState("");
     
             useEffect(() => {
                 const getHouses=async()=>{
-                    setLoading(true);
+                  startLoading();
                     setErr("");
                     try {
                         const bookResponse=await api.get('/houses');
@@ -21,16 +22,14 @@ const Houses = () => {
                             console.log("Unknown error", error);
                           }
                     }finally{
-                        setLoading(false);
+                        stopLoading();
                     }
                 }
             
                 getHouses();
             }, [])
             
-            if(loading) return <p>Loading.....</p>
             if(err) return <h1>Something Went Wrong</h1>
-            console.log(houses) 
   return (
 <section className="w-[90%] mx-auto py-10 px-8 " >
     <article className='flex flex-col items-center text-center mb-12'>
@@ -38,10 +37,7 @@ const Houses = () => {
     <p className=' tracking-wide text-lg text-muted-foreground max-w-[700px] mb-8 '>Learn about the four houses of Hogwarts School of Witchcraft and Wizardry.</p>
     </article>
     <article className='grid gap-8'>
-      <HouseCard/>
-      <HouseCard/>
-      <HouseCard/>
-      <HouseCard/>
+      <HouseCard houses={houses}/>
 
     </article>
   </section>
